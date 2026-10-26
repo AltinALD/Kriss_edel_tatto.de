@@ -1,4 +1,4 @@
-/* All Good Tattoo Parlor — Rotterdam */
+/* Kristina Edel — Tattoo Köln */
 
 :root {
   --ink: #090909;
@@ -199,6 +199,11 @@ body.is-loading .wa-float {
   border-bottom: 1px solid var(--line);
 }
 
+body.menu-open .site-header {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
 .logo {
   display: flex;
   align-items: center;
@@ -234,6 +239,33 @@ body.is-loading .wa-float {
   display: flex;
   align-items: center;
   gap: 0.35rem;
+}
+
+.lang-switch {
+  position: relative;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-left: 0.85rem;
+  margin-right: 0.15rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+}
+
+.lang-switch a {
+  opacity: 0.45;
+}
+
+.lang-switch a.is-on,
+.lang-switch a:hover,
+.lang-switch a:focus-visible {
+  opacity: 1;
+}
+
+.lang-switch span {
+  opacity: 0.35;
 }
 
 .nav {
@@ -1175,6 +1207,10 @@ body:has(.look-form:focus-within) .wa-float {
     padding-bottom: calc(2rem + var(--safe-b));
   }
   .footer-copy { grid-column: 1 / -1; }
+  .book-you-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .book-send { grid-column: 1 / -1; }
   .wa-float { display: none; }
 }
 
@@ -1203,7 +1239,7 @@ body:has(.look-form:focus-within) .wa-float {
     flex-direction: column;
     justify-content: center;
     gap: 1.35rem;
-    background: rgba(9, 9, 9, 0.97);
+    background: #090909;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -1213,6 +1249,12 @@ body:has(.look-form:focus-within) .wa-float {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100dvh;
   }
   .nav a {
     font-family: var(--serif);
@@ -1263,4 +1305,448 @@ body:has(.look-form:focus-within) .wa-float {
   .preloader-mark,
   .preloader-track span { animation: none; transition: none; }
   .preloader-track span { width: 100%; }
+}
+
+.nav a.is-active {
+  opacity: 1;
+}
+
+body.is-page main {
+  padding-top: calc(var(--header-h) + var(--safe-t));
+}
+
+.section-more {
+  max-width: 1120px;
+  margin: 1.8rem auto 0;
+}
+
+.hp {
+  position: absolute;
+  left: -9999px;
+  height: 0;
+  width: 0;
+  opacity: 0;
+}
+
+.thanks .btn {
+  margin: 1.5rem auto 0;
+}
+
+.book-layout {
+  display: grid;
+  gap: 1.8rem;
+  max-width: 1120px;
+  margin: clamp(1.6rem, 4vw, 2.6rem) auto 0;
+}
+
+.book-trio {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.book-step {
+  display: grid;
+  gap: 0.85rem;
+  align-content: start;
+}
+
+.book-step-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #6d675f;
+}
+
+.book-you {
+  display: grid;
+  gap: 0.85rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid rgba(9, 9, 9, 0.12);
+}
+
+.book-you-grid {
+  display: grid;
+  gap: 0.95rem;
+}
+
+.book-you-grid label {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.book-you-grid label span {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6d675f;
+}
+
+.book-you-grid input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.75rem 0;
+  border: 0;
+  border-bottom: 1px solid rgba(9, 9, 9, 0.22);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 16px;
+}
+
+.book-you-grid input:focus {
+  outline: none;
+  border-bottom-color: var(--ink);
+}
+
+.book-you-grid input::placeholder {
+  color: #a39d94;
+}
+
+.book-send {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.calendar {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.9rem;
+}
+
+.calendar-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.7rem;
+}
+
+.calendar-label {
+  font-family: var(--serif);
+  font-size: 1.45rem;
+  text-transform: capitalize;
+}
+
+.calendar-nav {
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(244, 239, 230, 0.3);
+  background: transparent;
+  color: var(--paper);
+  font-size: 1.4rem;
+}
+
+.calendar-nav:disabled {
+  opacity: 0.3;
+}
+
+.calendar-week,
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.25rem;
+}
+
+.calendar-week {
+  margin-bottom: 0.35rem;
+  color: var(--mute);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.day {
+  aspect-ratio: 1;
+  border: 0;
+  background: transparent;
+  color: var(--paper);
+  font-size: 0.92rem;
+}
+
+.day.is-empty {
+  pointer-events: none;
+}
+
+.day:disabled {
+  color: rgba(244, 239, 230, 0.28);
+}
+
+.day.is-on {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.slots {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.slots legend {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6d675f;
+  margin-bottom: 0.45rem;
+}
+
+.slot-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.slot {
+  min-height: 44px;
+  padding: 0 0.9rem;
+  border: 1px solid rgba(9, 9, 9, 0.25);
+  background: transparent;
+  color: var(--ink);
+  letter-spacing: 0.08em;
+}
+
+.slot.is-on {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.upload-drop {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 0.3rem;
+  min-height: 150px;
+  place-content: center;
+  text-align: center;
+  padding: 1.2rem;
+  background: #171717;
+  color: var(--paper);
+  border: 1px dashed rgba(244, 239, 230, 0.35);
+  cursor: pointer;
+}
+
+.upload-drop input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.upload-drop strong {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.upload-drop span:last-child,
+.upload-note,
+.picked {
+  color: #6d675f;
+  font-size: 0.85rem;
+}
+
+.upload-drop span:last-child {
+  color: var(--mute-dark);
+}
+
+.upload-drop.is-hot {
+  background: #222;
+}
+
+.upload-list {
+  list-style: none;
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.7rem;
+}
+
+.upload-list li {
+  display: grid;
+  grid-template-columns: 52px 1fr auto;
+  gap: 0.7rem;
+  align-items: center;
+}
+
+.upload-list img {
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+}
+
+.upload-list span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.85rem;
+}
+
+.upload-list button {
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+}
+
+.upload-note,
+.picked {
+  margin-top: 0.55rem;
+}
+
+@media (min-width: 980px) {
+  .book-trio {
+    grid-template-columns: minmax(240px, 0.9fr) minmax(220px, 1fr) minmax(200px, 0.85fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+}
+
+/* Pitch — Kristina Edel, Köln */
+
+.lang-switch button {
+  border: 0;
+  background: transparent;
+  padding: 0.35rem 0.1rem;
+  letter-spacing: 0.14em;
+  font-size: 0.68rem;
+  font-weight: 600;
+  opacity: 0.45;
+}
+
+.lang-switch button.is-on,
+.lang-switch button:hover,
+.lang-switch button:focus-visible {
+  opacity: 1;
+}
+
+body.is-pitch .hero h1 {
+  font-size: clamp(3.05rem, 9vw, 5.7rem);
+}
+
+.story {
+  padding: clamp(3.5rem, 8vw, 6.5rem) max(1.15rem, var(--safe-r)) clamp(3.5rem, 8vw, 6.5rem) max(1.15rem, var(--safe-l));
+  border-bottom: 1px solid var(--line);
+}
+
+.story-prose .section-title {
+  max-width: 12ch;
+}
+
+.story-prose p {
+  max-width: 38em;
+}
+
+.story-lede {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+  line-height: 1.28;
+  color: var(--paper);
+  margin-bottom: 1.15rem;
+}
+
+.story-prose p:not(.story-lede):not(.eyebrow) {
+  color: var(--mute-dark);
+  margin-bottom: 1rem;
+  font-size: 1.02rem;
+  line-height: 1.6;
+}
+
+.visit-card {
+  border: 1px solid var(--line);
+  padding: clamp(1.3rem, 3vw, 2rem);
+  background: #101010;
+}
+
+.hours {
+  list-style: none;
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 1.2rem;
+}
+
+.hours li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.95rem;
+}
+
+.hours li span:last-child {
+  color: var(--mute-dark);
+  letter-spacing: 0.04em;
+}
+
+.hours-note {
+  margin-top: 1rem;
+  color: var(--mute);
+  font-size: 0.88rem;
+  max-width: 36ch;
+}
+
+.contact-actions {
+  margin-top: 1.6rem;
+}
+
+.look .btn-solid {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.look .btn-solid:hover,
+.look .btn-solid:focus-visible {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.look .btn-ghost {
+  border-color: rgba(9, 9, 9, 0.35);
+  color: var(--ink);
+}
+
+.look .btn-ghost:hover,
+.look .btn-ghost:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.ig-float {
+  position: fixed;
+  z-index: 90;
+  right: max(1rem, var(--safe-r));
+  bottom: calc(1rem + var(--safe-b));
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+body.menu-open .ig-float {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (min-width: 700px) {
+  .ig-float { display: none; }
+  body.is-pitch .gallery { grid-template-columns: 1fr 1fr; }
+}
+
+@media (min-width: 980px) {
+  body.is-pitch .gallery { grid-template-columns: 1fr 1fr; }
+  body.is-pitch .story .about-grid,
+  body.is-pitch #studio .about-grid {
+    align-items: start;
+  }
 }

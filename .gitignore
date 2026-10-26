@@ -3,3 +3,7 @@ Thumbs.db
 vendor/
 node_modules/
 .env
+private/mail.secrets.php
+private/uploads/
+private/mail.log
+composer.lock

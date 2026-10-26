@@ -31,19 +31,10 @@
   const nav = document.getElementById("nav");
   const menuToggle = document.getElementById("menuToggle");
   const year = document.getElementById("year");
-  const form = document.getElementById("bookForm");
-  const formStatus = document.getElementById("formStatus");
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = document.getElementById("lightboxImg");
   const lightboxCap = document.getElementById("lightboxCap");
   const lightboxClose = document.getElementById("lightboxClose");
-  const lookStage = document.getElementById("lookStage");
-  const lookFile = document.getElementById("lookFile");
-  const lookPreview = document.getElementById("lookPreview");
-  const lookClear = document.getElementById("lookClear");
-  const sizeRange = document.getElementById("sizeRange");
-  const sizeValue = document.getElementById("sizeValue");
-  const dateField = document.getElementById("dateField");
 
   const audio = document.getElementById("bgAudio");
   const soundToggle = document.getElementById("soundToggle");
@@ -63,7 +54,8 @@
   const setSoundUi = (on) => {
     if (!soundToggle) return;
     soundToggle.setAttribute("aria-pressed", String(on));
-    soundToggle.setAttribute("aria-label", on ? "Muziek uitzetten" : "Muziek aanzetten");
+    const copy = window.ALLGOOD || {};
+    soundToggle.setAttribute("aria-label", on ? (copy.musicOff || "Turn music off") : (copy.musicOn || "Turn music on"));
   };
 
   const fadeMusic = () => {
@@ -132,10 +124,6 @@
     startMusic();
   });
 
-  const WHATSAPP = "31645536039";
-  const MAX_BYTES = 8 * 1024 * 1024;
-  let previewUrl = "";
-
   if (year) year.textContent = String(new Date().getFullYear());
 
   const onScroll = () => {
@@ -146,7 +134,8 @@
 
   const setMenu = (open) => {
     menuToggle?.setAttribute("aria-expanded", String(open));
-    menuToggle?.setAttribute("aria-label", open ? "Menu sluiten" : "Menu openen");
+    const copy = window.ALLGOOD || {};
+    menuToggle?.setAttribute("aria-label", open ? (copy.menuClose || "Close menu") : (copy.menuOpen || "Open menu"));
     nav?.classList.toggle("is-open", open);
     document.body.classList.toggle("menu-open", open);
     document.body.style.overflow = open ? "hidden" : "";
@@ -231,126 +220,5 @@
   const heroVideo = document.querySelector(".hero-video");
   document.addEventListener("visibilitychange", () => {
     if (!document.hidden) heroVideo?.play?.().catch(() => {});
-  });
-
-  if (dateField) {
-    const today = new Date();
-    const mm = String(today.getMonth() + 1).padStart(2, "0");
-    const dd = String(today.getDate()).padStart(2, "0");
-    dateField.min = `${today.getFullYear()}-${mm}-${dd}`;
-  }
-
-  const updateSize = () => {
-    if (sizeRange && sizeValue) sizeValue.textContent = `${sizeRange.value} cm`;
-  };
-  sizeRange?.addEventListener("input", updateSize);
-  updateSize();
-
-  const setStatus = (text, kind) => {
-    if (!formStatus) return;
-    formStatus.textContent = text;
-    formStatus.classList.toggle("is-ok", kind === "ok");
-    formStatus.classList.toggle("is-bad", kind === "bad");
-  };
-
-  const clearPreview = () => {
-    if (previewUrl) URL.revokeObjectURL(previewUrl);
-    previewUrl = "";
-    if (lookPreview) {
-      lookPreview.hidden = true;
-      lookPreview.removeAttribute("src");
-    }
-    lookStage?.classList.remove("has-image");
-    if (lookClear) lookClear.hidden = true;
-    if (lookFile) lookFile.value = "";
-  };
-
-  const showPreview = (file) => {
-    if (!file || !lookPreview || !lookStage) return;
-    if (!file.type.startsWith("image/")) {
-      setStatus("Kies een afbeelding in JPG, PNG of WebP.", "bad");
-      return;
-    }
-    if (file.size > MAX_BYTES) {
-      setStatus("De foto is groter dan 8 MB. Kies een kleiner bestand.", "bad");
-      return;
-    }
-    if (previewUrl) URL.revokeObjectURL(previewUrl);
-    previewUrl = URL.createObjectURL(file);
-    lookPreview.onload = () => {
-      lookPreview.hidden = false;
-      lookStage.classList.add("has-image");
-      if (lookClear) lookClear.hidden = false;
-      setStatus("Voorbeeld staat. De foto blijft op dit apparaat.", "ok");
-    };
-    lookPreview.onerror = () => {
-      clearPreview();
-      setStatus("Dit formaat kan hier niet getoond worden. Kies JPG, PNG of WebP.", "bad");
-    };
-    lookPreview.src = previewUrl;
-  };
-
-  lookFile?.addEventListener("change", () => {
-    const file = lookFile.files && lookFile.files[0];
-    if (file) showPreview(file);
-  });
-
-  lookClear?.addEventListener("click", () => {
-    clearPreview();
-    setStatus("", "");
-  });
-
-  ["dragenter", "dragover"].forEach((type) => {
-    lookStage?.addEventListener(type, (e) => {
-      e.preventDefault();
-      lookStage.classList.add("is-hot");
-    });
-  });
-
-  ["dragleave", "drop"].forEach((type) => {
-    lookStage?.addEventListener(type, (e) => {
-      e.preventDefault();
-      lookStage.classList.remove("is-hot");
-    });
-  });
-
-  lookStage?.addEventListener("drop", (e) => {
-    const file = e.dataTransfer?.files?.[0];
-    if (file) showPreview(file);
-  });
-
-  form?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const data = new FormData(form);
-    const name = String(data.get("name") || "").trim();
-    const phone = String(data.get("phone") || "").trim();
-    const date = String(data.get("date") || "").trim();
-    const place = String(data.get("place") || "").trim();
-    const message = String(data.get("message") || "").trim();
-    const size = String(data.get("size") || "").trim();
-
-    if (!name || !phone || !place || !message) {
-      setStatus("Vul naam, telefoon, plek en motief in.", "bad");
-      form.reportValidity();
-      return;
-    }
-
-    const lines = [
-      "Hallo All Good Tattoo, ik wil graag een afspraak aanvragen.",
-      `Naam: ${name}`,
-      `Telefoon: ${phone}`,
-      date ? `Gewenste datum: ${date}` : "",
-      `Grootte: ca. ${size} cm`,
-      `Plek: ${place}`,
-      `Motief: ${message}`,
-      previewUrl ? "Ik stuur een referentiefoto mee in deze chat." : ""
-    ].filter(Boolean);
-
-    const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join("\n"))}`;
-    const opened = window.open(url, "_blank", "noopener");
-    if (!opened) {
-      window.location.href = url;
-    }
-    setStatus("WhatsApp opent. Hang de foto daar als bijlage aan.", "ok");
   });
 })();
